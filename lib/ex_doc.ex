@@ -1,6 +1,10 @@
 defmodule ExDoc do
   require Erlang.file, as: F
 
+  def main(args) do
+    ExDoc.CLI.run(args)
+  end
+
   def generate_docs(path, options // []) do
     output_path = options[:output]      || "output"
     formatter   = options[:formatter]   || ExDoc.HTMLFormatter
