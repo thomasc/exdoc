@@ -126,9 +126,12 @@ defmodule ExDoc.Retriever do
   end
 
   defp get_module_from_file(name) do
+    dir = File.dirname name
     name   = File.basename name, ".beam"
     module = binary_to_atom name
+    path = binary_to_list(File.join([dir, name]))
 
+    :code.load_abs(path)
     if match?({ :error, _ }, Code.ensure_loaded(module)), do:
       raise Error, message: "module #{inspect module} is not defined/available"
 
